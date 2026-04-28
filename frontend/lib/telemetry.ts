@@ -71,8 +71,10 @@ export type TelemetryRecord = {
   [key: string]: unknown;
 };
 
-export const API_ENDPOINT = "http://localhost:4000/api/telemetry/generate";
-export const API_DISPLAY_ENDPOINT = "localhost:4000/api/telemetry/generate";
+export const API_ENDPOINT =
+  "https://telemetry-exporter.onrender.com/telemetry/generate";
+export const API_DISPLAY_ENDPOINT =
+  "https://telemetry-exporter.onrender.com/telemetry/generate";
 
 export const INITIAL_FORM_VALUES: FormValues = {
   imei: "",
