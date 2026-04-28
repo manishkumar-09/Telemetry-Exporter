@@ -11,7 +11,7 @@ const {
 
 const TelemetryGenerator = (req, res) => {
   try {
-    const {
+    let {
       imei,
       serialNumber,
       totalEnergy,
@@ -24,6 +24,7 @@ const TelemetryGenerator = (req, res) => {
       dataCount,
     } = req.body;
 
+    hp = Number(hp);
     const timestamps = generateTimestamps({
       fromDate,
       toDate,
