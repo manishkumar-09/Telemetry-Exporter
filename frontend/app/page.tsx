@@ -253,7 +253,7 @@ export default function DashboardPage() {
         <div className="flex items-start justify-between flex-wrap gap-4">
           <div>
             <h1 className="text-2xl font-bold text-slate-800 tracking-tight">
-              Device Data Generator
+              Device Data Simulator
             </h1>
             <p className="text-sm text-slate-500 mt-1">
               Fetch real pump telemetry records from{" "}
