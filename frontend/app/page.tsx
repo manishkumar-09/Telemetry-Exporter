@@ -209,7 +209,7 @@ export default function DashboardPage() {
               </span>
               <span className="text-slate-300 text-xs hidden sm:inline">·</span>
               <span className="text-slate-400 text-xs hidden sm:inline">
-                Device Data Generator
+                Device Data Simulator
               </span>
             </div>
           </div>
