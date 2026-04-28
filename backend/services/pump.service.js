@@ -224,13 +224,15 @@ function generateVoltage(freq, dcVoltage) {
   return voltage.toFixed(2);
 }
 // power
+
 function calculatePower(voltage, current, hp) {
   const SQRT3 = 1.732;
   const PF = 0.8;
 
+  const hpValue = Number(hp);
+
   let power = (SQRT3 * voltage * current * PF) / 1000;
 
-  // max power per HP (limit realistic output)
   const maxPowerMap = {
     3: 3,
     5: 5,
@@ -238,10 +240,12 @@ function calculatePower(voltage, current, hp) {
     10: 10,
   };
 
-  const maxPower = maxPowerMap[hp] || 5;
+  const maxPower = maxPowerMap[hpValue] || 5;
 
-  // clamp power
-  power = Math.min(power, maxPower);
+  // soft cap
+  if (power > maxPower) {
+    power = maxPower * (0.85 + Math.random() * 0.1);
+  }
 
   return power.toFixed(2);
 }
