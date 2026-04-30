@@ -218,30 +218,6 @@ export default function DashboardPage() {
               <div className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
               System Online
             </div>
-            <div className="hidden sm:flex items-center gap-1.5 text-xs text-slate-400 font-mono bg-slate-100 px-2.5 py-1 rounded-md border border-slate-200">
-              <svg
-                width="10"
-                height="10"
-                viewBox="0 0 10 10"
-                fill="none"
-                className="text-slate-400"
-              >
-                <circle
-                  cx="5"
-                  cy="5"
-                  r="4"
-                  stroke="currentColor"
-                  strokeWidth="1.2"
-                />
-                <path
-                  d="M5 2.5V5L6.5 6.5"
-                  stroke="currentColor"
-                  strokeWidth="1.2"
-                  strokeLinecap="round"
-                />
-              </svg>
-              {API_DISPLAY_ENDPOINT}
-            </div>
             <span className="text-xs text-slate-400 font-mono hidden md:block">
               v1.0.0
             </span>
