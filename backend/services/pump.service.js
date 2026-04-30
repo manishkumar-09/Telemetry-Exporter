@@ -355,7 +355,7 @@ function generateFlow(powerKW, hp) {
 
 //today water discharge
 function getIntervalWater(flowLPM) {
-  const INTERVAL_MINUTES = 15;
+  const INTERVAL_MINUTES = 12;
 
   if (flowLPM <= 0) return 0;
 
@@ -393,23 +393,27 @@ function updateTotalWater(intervalWater, previousTotalWater, hp) {
 
 // daily run hours
 function generateDailyRunHours() {
+  const MIN_HOURS = 0.1;
   const MAX_HOURS = 0.9;
 
   const r = Math.random();
   let hours;
 
   if (r < 0.2) {
-    // very low sunlight
-    hours = Math.random() * 0.3; // 0–0.3
+    // very low sunlight → 0.1–0.3
+    hours = MIN_HOURS + Math.random() * 0.2;
   } else if (r < 0.7) {
-    // normal
-    hours = 0.3 + Math.random() * 0.4; // 0.3–0.7
+    // normal → 0.3–0.7
+    hours = 0.3 + Math.random() * 0.4;
   } else {
-    // good sunlight
-    hours = 0.7 + Math.random() * 0.2; // 0.7–0.9
+    // good sunlight → 0.7–0.9
+    hours = 0.7 + Math.random() * 0.2;
   }
 
-  return Math.min(hours, MAX_HOURS).toFixed(2);
+  // Clamp
+  hours = Math.max(MIN_HOURS, Math.min(hours, MAX_HOURS));
+
+  return hours.toFixed(2);
 }
 
 //Total run hours
