@@ -227,11 +227,11 @@ function generateVoltage(freq, dcVoltage) {
 
 function calculatePower(voltage, current, hp) {
   const SQRT3 = 1.732;
-  const PF = 0.8;
+  // const PF = 0.8;
 
   const hpValue = Number(hp);
 
-  let power = (SQRT3 * voltage * current * PF) / 1000;
+  let power = (SQRT3 * voltage * current) / 1000;
 
   const maxPowerMap = {
     3: 3,
@@ -244,7 +244,7 @@ function calculatePower(voltage, current, hp) {
 
   // soft cap
   if (power > maxPower) {
-    power = maxPower * (0.85 + Math.random() * 0.1);
+    power = maxPower * (0.5 + Math.random() * 0.1);
   }
 
   return power.toFixed(2);
@@ -285,15 +285,16 @@ function generateDCCurrent(popVoltage, popCurrent, dcVoltage) {
 function generateTodayIntervalEnergy(powerKW) {
   const INTERVAL_HOURS = 15 / 60; // 0.25
 
-  if (powerKW <= 0.1) return "0.00";
+  if (powerKW <= 0.1) return "0.01";
 
   // base energy
   let energy = powerKW * INTERVAL_HOURS;
 
   // add solar fluctuation (±10%)
-  const variation = 0.9 + Math.random() * 0.2;
+  const variation = 0.3 + Math.random() * 0.1;
 
-  energy = energy * variation;
+  // energy = energy * variation;
+  energy = energy;
 
   return energy.toFixed(2);
 }
@@ -303,7 +304,7 @@ function updateTotalEnergy(intervalEnergy, previousTotalEnergy) {
   let total = parseFloat(previousTotalEnergy) || 0;
 
   let interval = parseFloat(intervalEnergy) || 0;
-  let random = getRandomInRange(0.5, 1.5);
+  let random = getRandomInRange(0.2, 0.9);
 
   interval += random;
   total += interval;
@@ -370,14 +371,14 @@ function getIntervalWater(flowLPM) {
 //total water discharge
 function updateTotalWater(intervalWater, previousTotalWater, hp) {
   const rangeMap = {
-    3: [2000, 3000],
-    5: [2000, 4000],
-    7.5: [2000, 5000],
-    10: [2000, 6000],
+    3: [500, 1000],
+    5: [500, 1200],
+    7.5: [500, 1500],
+    10: [500, 2000],
   };
 
   const hpValue = Number(hp);
-  const [min, max] = rangeMap[hpValue] || [2000, 4000];
+  const [min, max] = rangeMap[hpValue] || [500, 1500];
 
   //  ALWAYS add extra water
   const extraWater = getRandomInRange(min, max);
@@ -392,30 +393,29 @@ function updateTotalWater(intervalWater, previousTotalWater, hp) {
 
 // daily run hours
 function generateDailyRunHours() {
-  const MAX_HOURS = 2.5;
+  const MAX_HOURS = 0.9;
 
   const r = Math.random();
   let hours;
 
   if (r < 0.2) {
-    //  Very low sunlight
-    hours = Math.random() * 1.0; // 0–1 hr
+    // very low sunlight
+    hours = Math.random() * 0.3; // 0–0.3
   } else if (r < 0.7) {
-    //  Normal day
-    hours = 1.0 + Math.random() * 1.0; // 1–2 hrs
+    // normal
+    hours = 0.3 + Math.random() * 0.4; // 0.3–0.7
   } else {
-    //  Good sunlight
-    hours = 2.0 + Math.random() * 0.5; // 2–2.5 hrs
+    // good sunlight
+    hours = 0.7 + Math.random() * 0.2; // 0.7–0.9
   }
 
-  // Safety cap (extra protection)
   return Math.min(hours, MAX_HOURS).toFixed(2);
 }
 
 //Total run hours
 function updateTotalRunHours(previousTotal, dailyRunHours) {
   let total = parseFloat(previousTotal) || 0;
-  let extraHour = getRandomInRange(1, 2);
+  let extraHour = getRandomInRange(0.1, 0.5);
   total = total + extraHour;
   total += parseFloat(dailyRunHours) || 0;
 
